@@ -1,0 +1,3 @@
+
+var mongoose = require('mongoose');var Schema = mongoose.Schema;var Amunitions = new Schema({name: {type: String, required: true},img: {type: Buffer, required: true},props: {
+distance: {type: Number, required: true},damage: {type: Number, required: true},defence: {type: Number, required: true},accuracy: {type: Number, required: true},speed: {type: Number, required: true}},cost: {type: Number, required: true},AmunitionType: {type: Schema.Types.ObjectId, required: true, ref: 'AmunitionTypes'}}); 

@@ -1,0 +1,2 @@
+
+var mongoose = require('mongoose');var Schema = mongoose.Schema;var BattleMapSizeTypes = new Schema({name: {type: String, required: true},width: {type: Number, required: true},height: {type: Number, required: true}}); 

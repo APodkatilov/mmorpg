@@ -1,0 +1,2 @@
+
+var mongoose = require('mongoose');var Schema = mongoose.Schema;var UserSessions = new Schema({token: {type: String, required: true},deadline: {type: Date, required: true},createAt: {type: Date, required: true},updateAt: {type: Date, required: true},User: {type: Schema.Types.ObjectId, required: true, ref: 'User'}}); 

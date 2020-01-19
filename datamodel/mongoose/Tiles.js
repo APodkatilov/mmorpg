@@ -1,0 +1,2 @@
+
+var mongoose = require('mongoose');var Schema = mongoose.Schema;var Tiles = new Schema({img: {type: Buffer, required: true},TileType: {type: Schema.Types.ObjectId, required: true, ref: 'TileTypes'}}); 

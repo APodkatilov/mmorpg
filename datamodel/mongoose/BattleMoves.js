@@ -1,0 +1,2 @@
+
+var mongoose = require('mongoose');var Schema = mongoose.Schema;var BattleMoves = new Schema({num: {type: Number, required: true},actions: [{type: BattleAction, required: true}],finished: {type: Boolean, required: true}}); 

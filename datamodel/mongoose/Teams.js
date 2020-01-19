@@ -1,0 +1,2 @@
+
+var mongoose = require('mongoose');var Schema = mongoose.Schema;var Teams = new Schema({name: {type: Schema.Types.ObjectId, required: true},color: {type: String},createAt: {type: Date, required: true},updateAt: {type: Date, required: true},Players: {type: Schema.Types.ObjectId, required: true, ref: 'Players'}}); 

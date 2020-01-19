@@ -1,0 +1,2 @@
+
+var mongoose = require('mongoose');var Schema = mongoose.Schema;var Users = new Schema({nickname: {type: String, required: true},email: {type: String, required: true},passwordHash: {type: String, required: true},salt: {type: String, required: true},createAt: {type: Date, required: true}}); 

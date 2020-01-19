@@ -1,0 +1,2 @@
+
+var mongoose = require('mongoose');var Schema = mongoose.Schema;var BattleMapTypes = new Schema({name: {type: String, required: true},teamCount: {type: Number, required: true},teamPlayerCount: {type: Number, required: true},BattleMapSizeType: {type: Schema.Types.ObjectId, required: true, ref: 'BattleMapSizeType'}}); 
