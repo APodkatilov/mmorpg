@@ -6,16 +6,16 @@ module.exports = {
     apiPort:process.env.APIPORT || '3030',
     dbHost:"localhost",
     dbPort:"27017",
-    dbName: "bot-manager",
+    dbName: "mmorpg",
     app:{
-        title:"Todo Manager",
-        description:'Todo Manager for add, remove, edit and delete bot.',
+        title:"MMORPG admin dashboard",
+        description:'MMORPG admin dashboard.',
         head:{
-            titleTemplate:'Todo Manager',
+            titleTemplate:'MMORPG administration',
             meta:[
                 {
                     name:"description",
-                    content:"Todo Manager for add, remove, edit and delete bot."
+                    content:"MMORPG admin dashboard."
                 },
                 {charset:"utf-8"}
             ]

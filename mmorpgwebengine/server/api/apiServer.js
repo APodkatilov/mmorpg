@@ -2,6 +2,9 @@ import Express from 'express';
 import config from '../../config';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import seeder from 'mongoose-seed';
+import dbSeedData from '../resources/dbseed.js';
+
 var fs = require('fs')
 var morgan = require('morgan')
 var path = require('path')
@@ -23,7 +26,19 @@ app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use('/', require('./routes/todo.router'));
 
 mongoose.Promise = require('bluebird');
-mongoose.connect(`mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`, function (err) {
+
+const connectionString = `mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`;
+
+seeder.connect(connectionString, function() {
+  seeder.loadModels( dbSeedData.modelPaths);
+  seeder.clearModels(dbSeedData.models, function() {
+    seeder.populateModels(dbSeedData.data, function() {
+      seeder.disconnect();
+    });
+  });
+});
+
+mongoose.connect(connectionString, function (err) {
     if (err) {
         console.log("Please check if you have Mongo installed. The following error occurred: ", err);
         return;
