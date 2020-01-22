@@ -82,6 +82,8 @@
     "redux": "^3.7.2",
     "redux-form": "^7.2.3",
     "redux-form-material-ui": "^4.3.3",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.0",
+    "winston": "^3.2.1",
+    "winston-mongodb": "^5.0.1"
   }
 }

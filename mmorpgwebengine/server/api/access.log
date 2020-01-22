@@ -1,7 +1,0 @@
-::ffff:127.0.0.1 - - [18/Jan/2020:19:25:04 +0000] "GET /todo HTTP/1.1" 200 118 "http://127.0.0.1:3001/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"
-::ffff:127.0.0.1 - - [18/Jan/2020:19:25:39 +0000] "GET /todo HTTP/1.1" 200 118 "http://127.0.0.1:3001/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"
-::ffff:127.0.0.1 - - [18/Jan/2020:19:34:07 +0000] "GET /todo HTTP/1.1" 200 118 "http://127.0.0.1:3001/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"
-::ffff:127.0.0.1 - - [18/Jan/2020:19:34:19 +0000] "GET /todo HTTP/1.1" 304 - "http://127.0.0.1:3001/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"
-::ffff:127.0.0.1 - - [18/Jan/2020:19:34:30 +0000] "GET /todo/5e2303fb13cf0c356077cd51 HTTP/1.1" 200 116 "http://127.0.0.1:3001/create-todo/5e2303fb13cf0c356077cd51" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"
-::ffff:127.0.0.1 - - [18/Jan/2020:19:34:31 +0000] "PUT /todo HTTP/1.1" 200 - "http://127.0.0.1:3001/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"
-::ffff:127.0.0.1 - - [18/Jan/2020:19:34:32 +0000] "GET /todo HTTP/1.1" 304 - "http://127.0.0.1:3001/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0"
