@@ -8,6 +8,12 @@ import logger from "../logger";
 import morgan from "morgan";
 import winston from "winston";
 
+import todoRoute from "./routes/todo.router";
+import authRouter from "./routes/auth.router";
+import resourceRouter from "./routes/resource.router";
+
+import authMiddleware from "./middlewares/authMiddleware";
+
 const port = config.apiPort;
 
 const app = new Express();
@@ -18,9 +24,14 @@ if (config.env === "development") {
 }
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ type: "application/*+json" }));
+app.use(bodyParser.json({ type: "application/json" }));
 
-app.use("/", require("./routes/todo.router"));
+app.use("/todo", todoRoute);
+app.use("/auth", authRouter);
+
+app.use(authMiddleware);
+
+app.use("/resource", resourceRouter);
 
 mongoose.Promise = require("bluebird");
 

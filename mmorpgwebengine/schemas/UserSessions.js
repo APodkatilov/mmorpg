@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import uuid from "uuid/v1";
 
 const userSessionSchema = new mongoose.Schema(
   {
@@ -8,6 +9,20 @@ const userSessionSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+const generateToken = () => uuid();
+
+userSessionSchema.statics = {
+  register: function(user) {
+    const userSession = new this({
+      token: generateToken(),
+      deadline: new Date(),
+      user: user._id
+    });
+
+    return userSession.save();
+  }
+};
 
 userSessionSchema.index({ token: 1 });
 
