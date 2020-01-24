@@ -1,17 +1,15 @@
-import mongoose from "mongoose";
-
-import { BATTLE_MAP_TYPE_SANDOX } from "./battleMapTypes";
-import { TILE_SIMPLE_ROAD_TILE } from "./tiles";
+import { BATTLE_MAP_TYPE_SANDOX } from './battleMapTypes';
+import { TILE_SIMPLE_ROAD } from './tiles';
 
 export default [
   {
-    name: "SimpleSandboxMap",
+    name: 'SimpleSandboxMap',
     battleMapType: BATTLE_MAP_TYPE_SANDOX,
     tiles: [
-      TILE_SIMPLE_ROAD_TILE,
-      TILE_SIMPLE_ROAD_TILE,
-      TILE_SIMPLE_ROAD_TILE,
-      TILE_SIMPLE_ROAD_TILE
-    ]
-  }
+      TILE_SIMPLE_ROAD,
+      TILE_SIMPLE_ROAD,
+      TILE_SIMPLE_ROAD,
+      TILE_SIMPLE_ROAD,
+    ],
+  },
 ];

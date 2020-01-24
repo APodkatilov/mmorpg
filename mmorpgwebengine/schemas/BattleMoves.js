@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import BattleAction from "./BattleAction";
+import mongoose from 'mongoose';
+import BattleAction from './BattleAction';
 
 module.exports = new mongoose.Schema({
   num: { type: Number, required: true },
@@ -8,6 +8,6 @@ module.exports = new mongoose.Schema({
   player: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "Player"
-  }
+    ref: 'Player',
+  },
 });

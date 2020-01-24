@@ -1,19 +1,17 @@
-import f from '../server/core/game';
-var assert = require('assert');
+import { equal } from 'assert';
 
-describe('Array', function() {
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert.equal([1, 2, 3].indexOf(4), -1);
+describe('Array', () => {
+  describe('#indexOf()', () => {
+    it('should return -1 when the value is not present', () => {
+      equal([1, 2, 3].indexOf(4), -1);
     });
   });
 });
 
-describe('game', function() {
-    describe('test', function() {
-      it('should return -1 when the value is not present', function() {
-        assert.equal(f(1), 2);
-      });
-    });
-  });
-  
+// describe('game', function() {
+//     describe('test', function() {
+//       it('should return -1 when the value is not present', function() {
+//         equal(f(1), 2);
+//       });
+//     });
+//   });

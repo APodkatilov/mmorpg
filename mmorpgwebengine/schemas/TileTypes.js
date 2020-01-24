@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 module.exports = new mongoose.Schema({
   name: { type: String, required: true },
@@ -8,6 +8,6 @@ module.exports = new mongoose.Schema({
     canFire: { type: Boolean, default: false },
     damage: { type: Number, default: false },
     impedance: { type: Number, default: false },
-    acceleration: { type: Number, default: false }
-  }
+    acceleration: { type: Number, default: false },
+  },
 });

@@ -1,39 +1,40 @@
-import Express from "express";
-import config from "../../config";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import seeder from "mongoose-seed";
-import dbSeedData from "../resources/dbseed.js";
-import logger from "../logger";
-import morgan from "morgan";
-import winston from "winston";
+import Express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+// import seeder from 'mongoose-seed';
+import winston from 'winston';
+import morgan from 'morgan';
+// import dbSeedData from '../resources/dbseed';
+import BluebirdPromise from 'bluebird';
+import logger from '../logger';
+import config from '../../config';
 
-import todoRoute from "./routes/todo.router";
-import authRouter from "./routes/auth.router";
-import resourceRouter from "./routes/resource.router";
+import todoRoute from './routes/todo.router';
+import authRouter from './routes/auth.router';
+import resourceRouter from './routes/resource.router';
 
-import authMiddleware from "./middlewares/authMiddleware";
+import authMiddleware from './middlewares/authMiddleware';
 
 const port = config.apiPort;
 
 const app = new Express();
 
 // setup the logger
-if (config.env === "development") {
-  app.use(morgan("combined", { stream: logger.stream }));
+if (config.env === 'development') {
+  app.use(morgan('combined', { stream: logger.stream }));
 }
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ type: "application/json" }));
+app.use(bodyParser.json({ type: 'application/json' }));
 
-app.use("/todo", todoRoute);
-app.use("/auth", authRouter);
+app.use('/todo', todoRoute);
+app.use('/auth', authRouter);
 
 app.use(authMiddleware);
 
-app.use("/resource", resourceRouter);
+app.use('/resource', resourceRouter);
 
-mongoose.Promise = require("bluebird");
+mongoose.Promise = BluebirdPromise;
 
 const connectionString = `mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
@@ -46,31 +47,39 @@ const connectionString = `mongodb://${config.dbHost}:${config.dbPort}/${config.d
 //   });
 // });
 
-mongoose.connect(connectionString, function(err) {
-  if (err) {
-    console.log(
-      "Please check if you have Mongo installed. The following error occurred: ",
-      err
+mongoose
+  .connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(() => {
+    logger.add(
+      new winston.transports.MongoDB({
+        level: 'info',
+        db: connectionString,
+        collection: 'logs',
+        options: {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        },
+      }),
     );
-    return;
-  }
+    console.log('Api Server Started');
 
-  logger.add(
-    new winston.transports.MongoDB({
-      level: "info",
-      db: connectionString,
-      collection: "logs"
-    })
-  );
-  console.log("Api Server Started");
-
-  app.listen(port, function(err) {
-    if (err) {
-      console.error("err:", err);
-    } else {
-      console.info(
-        `===> api server is running at ${config.apiHost}:${config.apiPort}`
-      );
-    }
+    app.listen(port, (err) => {
+      if (err) {
+        console.error('err:', err);
+      } else {
+        console.info(
+          `===> api server is running at ${config.apiHost}:${config.apiPort}`,
+        );
+      }
+    });
+  })
+  .catch((err) => {
+    console.log(
+      'Please check if you have Mongo installed. The following error occurred: ',
+      err,
+    );
   });
-});

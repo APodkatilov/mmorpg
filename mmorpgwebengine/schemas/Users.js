@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
   {
@@ -9,80 +9,77 @@ const userSchema = new mongoose.Schema(
       minLength: 6,
       maxLength: 20,
       unique: true,
-      index: true
+      index: true,
     },
     email: {
       type: String,
       required: true,
       trim: true,
       unique: true,
-      index: true
+      index: true,
     },
     passwordHash: { type: String, required: true },
-    salt: { type: String, default: "" }
+    salt: { type: String, default: '' },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
-const generateHash = (str, salt) => {
-  return str;
-};
+// eslint-disable-next-line no-unused-vars
+const generateHash = (str, salt) => str;
 
-const generateSalt = () => {
-  return "salt";
-};
+const generateSalt = () => 'salt';
 
-userSchema.virtual("password").set(function(value) {
+userSchema.virtual('password').set(function setPassword(value) {
   this.salt = generateSalt();
   this.passwordHash = generateHash(value, this.salt);
 });
 
 userSchema.statics = {
-  singIn: function(email, password) {
-    return this.findOne({ email }).then(user => {
+  singIn(email, password) {
+    return this.findOne({ email }).then((user) => {
       if (!user) {
-        throw new Error("Пользователь не найден.");
+        throw new Error('Пользователь не найден.');
       }
 
       const passwordHash = generateHash(password, user.salt);
 
       if (passwordHash !== user.passwordHash) {
-        throw new Error("Пользователь не найден.");
+        throw new Error('Пользователь не найден.');
       }
 
-      return new mongoose.Promise.resolve(user);
+      return mongoose.Promise.resolve(user);
     });
   },
 
-  signOn: function(nickname, email, password) {
-    const model = this;
+  signOn(nickname, email, password) {
+    const Model = this;
 
-    return this.findOne({ nickname }).then(user => {
-      if (user !== null) {
-        throw new Error("Пользователь с таким именем уже существует");
+    return this.findOne({ nickname }).then((userByNickname) => {
+      if (userByNickname !== null) {
+        throw new Error('Пользователь с таким именем уже существует');
       }
 
-      return this.findOne({ email }).then(user => {
-        if (user !== null) {
+      return this.findOne({ email }).then((userByEmail) => {
+        if (userByEmail !== null) {
           throw new Error(
-            "Пользователь с таким адресом электронной почты уже существует"
+            'Пользователь с таким адресом электронной почты уже существует',
           );
         }
 
         const salt = generateSalt();
         const passwordHash = generateHash(password, salt);
-        const newUser = new model({
+        const newUser = new Model({
           nickname,
           email,
           passwordHash,
-          salt
+          salt,
         });
         return newUser.save();
       });
     });
-  }
+  },
 };
 
 module.exports = userSchema;

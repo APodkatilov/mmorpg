@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 module.exports = new mongoose.Schema(
   {
-    text: { type: String, required: true }
+    text: { type: String, required: true },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );

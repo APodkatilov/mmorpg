@@ -1,27 +1,28 @@
-import mongoose from "mongoose";
-import uuid from "uuid/v1";
+import mongoose from 'mongoose';
+import uuid from 'uuid/v1';
 
 const userSessionSchema = new mongoose.Schema(
   {
     token: { type: String, required: true },
     deadline: { type: Date, required: true },
-    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" }
+    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const generateToken = () => uuid();
 
 userSessionSchema.statics = {
-  register: function(user) {
+  register(user) {
     const userSession = new this({
       token: generateToken(),
       deadline: new Date(),
-      user: user._id
+      // eslint-disable-next-line no-underscore-dangle
+      user: user._id,
     });
 
     return userSession.save();
-  }
+  },
 };
 
 userSessionSchema.index({ token: 1 });

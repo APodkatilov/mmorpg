@@ -1,10 +1,10 @@
 class PlayerGameContext {
   constructor(user) {
-    this._user = null;
-    this._player = null;
-    this._map = null;
-    this._team = null;
-    this._battle = null;
+    this.user = user;
+    this.player = null;
+    this.map = null;
+    this.team = null;
+    this.battle = null;
   }
 }
 

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 module.exports = new mongoose.Schema({
   name: { type: String, required: true },
@@ -7,6 +7,6 @@ module.exports = new mongoose.Schema({
   battleMapSizeType: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "BattleMapSizeType"
-  }
+    ref: 'BattleMapSizeType',
+  },
 });

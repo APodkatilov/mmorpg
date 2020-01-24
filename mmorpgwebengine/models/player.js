@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import playerSchema from '../schemas/Players';
 
-module.exports = mongoose.model("Player", playerSchema);
+module.exports = mongoose.model('Player', playerSchema);

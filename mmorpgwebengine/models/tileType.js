@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import tileTypeSchema from '../schemas/TileTypes';
 
-module.exports = mongoose.model("TileType", tileTypeSchema);
+module.exports = mongoose.model('TileType', tileTypeSchema);

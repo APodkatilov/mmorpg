@@ -1,28 +1,29 @@
-import UserSession from "../../../models/userSession";
-import Response from "../response";
+import UserSession from '../../../models/userSession';
+import Response from '../response';
 
-export default function(req, res, next) {
+export default function (req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    res.status(401).json(new Response(false, null, "Требуется атворизация."));
+    res.status(401).json(new Response(false, null, 'Требуется атворизация.'));
   }
   UserSession.findOne({ token: authHeader })
-    .then(res => {
+    .then((userSession) => {
       if (res != null) {
-        req.context = UserSession();
+        req.context = userSession;
         next();
       } else {
         res
           .status(400)
           .json(
-            new Response(false, null, "Токен авторизации не действителен.")
+            new Response(false, null, 'Токен авторизации не действителен.'),
           );
       }
+      return null;
     })
-    .catch(err => {
+    .catch((err) => {
       res
         .status(400)
-        .json(new Response(false, null, "Ошибка проверки авторизации."));
+        .json(new Response(false, null, `Ошибка проверки авторизации (${err.message}).`));
     });
 }

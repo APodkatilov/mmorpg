@@ -1,24 +1,24 @@
-import express from "express";
-import validationMiddleware from "../middlewares/validationMiddleware";
+import express from 'express';
+import validationMiddleware from '../middlewares/validationMiddleware';
 import {
   signOnValidationRules,
-  signInValidationRules
-} from "../validators/auth.validator";
-import * as authHandler from "../handlers/auth.handler";
+  signInValidationRules,
+} from '../validators/auth.validator';
+import * as authHandler from '../handlers/auth.handler';
 
 const router = express.Router();
 
 router.post(
-  "/signin",
+  '/signin',
   signInValidationRules(),
   validationMiddleware,
-  authHandler.signIn
+  authHandler.signIn,
 );
 router.post(
-  "/signon",
+  '/signon',
   signOnValidationRules(),
   validationMiddleware,
-  authHandler.signOn
+  authHandler.signOn,
 );
 
 export default router;

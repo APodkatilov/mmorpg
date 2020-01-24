@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 module.exports = new mongoose.Schema({
   num: { type: Number, required: true },
@@ -6,12 +6,12 @@ module.exports = new mongoose.Schema({
     timestamp: { type: Date, required: true },
     direction: {
       type: String,
-      enum: ["North", "South", "West", "East"]
+      enum: ['North', 'South', 'West', 'East'],
     },
     distance: {
-      type: Number
-    }
+      type: Number,
+    },
   },
-  actionType: { type: String, requried: true, enum: ["Fire", "Move", "Skip"] },
-  player: { type: mongoose.Schema.Types.ObjectId, ref: "Players" }
+  actionType: { type: String, requried: true, enum: ['Fire', 'Move', 'Skip'] },
+  player: { type: mongoose.Schema.Types.ObjectId, ref: 'Players' },
 });

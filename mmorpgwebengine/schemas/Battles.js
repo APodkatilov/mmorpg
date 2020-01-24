@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import BattleMoves from "./BattleMoves";
-import Message from "./Message";
+import mongoose from 'mongoose';
+import BattleMoves from './BattleMoves';
+import Message from './Message';
 
 const battleSchema = new mongoose.Schema(
   {
@@ -9,9 +9,9 @@ const battleSchema = new mongoose.Schema(
     finishAt: { type: Date },
     teams: [{ type: mongoose.Schema.Types.ObjectId, required: true }],
     battleMap: { type: mongoose.Schema.Types.ObjectId, required: true },
-    messages: [{ type: Message, required: true }]
+    messages: [{ type: Message, required: true }],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 battleSchema.index({ teams: 1 });

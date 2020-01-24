@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const battleMapSchema = new mongoose.Schema({
   name: { type: String, required: true },
   battleMapType: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "BattleMapType"
+    ref: 'BattleMapType',
   },
   tiles: [
-    { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Tiles" }
-  ]
+    { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Tiles' },
+  ],
 });
 
 battleMapSchema.index({ battleMapType: 1 });
