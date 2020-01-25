@@ -1,5 +1,6 @@
 import UserSession from '../../../models/userSession';
 import Response from '../response';
+import PlayerGameContext from '../../core/playerGameContext';
 
 export default function (req, res, next) {
   const authHeader = req.headers.authorization;
@@ -10,8 +11,12 @@ export default function (req, res, next) {
   UserSession.findOne({ token: authHeader })
     .then((userSession) => {
       if (res != null) {
-        req.context = userSession;
-        next();
+        req.context = new PlayerGameContext(userSession.user);
+        req.context.load().then(() => next()).catch((err) => res
+          .status(400)
+          .json(
+            new Response(false, null, `Ошибка восстановления контекста пользователя (${err.message}).`),
+          ));
       } else {
         res
           .status(400)

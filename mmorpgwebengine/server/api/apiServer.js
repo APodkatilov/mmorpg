@@ -12,8 +12,10 @@ import config from '../../config';
 import todoRoute from './routes/todo.router';
 import authRouter from './routes/auth.router';
 import resourceRouter from './routes/resource.router';
+import battleRouter from './routes/battle.router';
 
 import authMiddleware from './middlewares/authMiddleware';
+
 
 const port = config.apiPort;
 
@@ -33,6 +35,7 @@ app.use('/auth', authRouter);
 app.use(authMiddleware);
 
 app.use('/resource', resourceRouter);
+app.use('/battle', battleRouter);
 
 mongoose.Promise = BluebirdPromise;
 

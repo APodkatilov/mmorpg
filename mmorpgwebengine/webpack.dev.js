@@ -35,7 +35,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react', 'env', 'stage-0']
+                    presets: ['react', 'env']
                 }
             },
             {test: /\.eot(\?v=\d+.\d+.\d+)?$/, loader: 'file-loader'},

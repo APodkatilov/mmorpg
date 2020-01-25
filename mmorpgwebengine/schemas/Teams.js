@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Player from '../models/player';
 
 const teamSchema = new mongoose.Schema(
   {
@@ -13,4 +14,9 @@ const teamSchema = new mongoose.Schema(
 
 teamSchema.index({ players: 1 });
 
+teamSchema.methods = {
+  getPlayers: function getPlayers() {
+    return Player.find({ _id: { $in: this.players } });
+  },
+};
 module.exports = teamSchema;

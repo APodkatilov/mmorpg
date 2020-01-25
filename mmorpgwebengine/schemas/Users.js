@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Player from '../models/player';
 
 const userSchema = new mongoose.Schema(
   {
@@ -70,13 +71,19 @@ userSchema.statics = {
 
         const salt = generateSalt();
         const passwordHash = generateHash(password, salt);
-        const newUser = new Model({
-          nickname,
-          email,
-          passwordHash,
-          salt,
+
+        const userId = mongoose.Types.ObjectId();
+
+        return Player.createDefault(userId).then(() => {
+          const newUser = new Model({
+            _id: userId,
+            nickname,
+            email,
+            passwordHash,
+            salt,
+          });
+          return newUser.save();
         });
-        return newUser.save();
       });
     });
   },
