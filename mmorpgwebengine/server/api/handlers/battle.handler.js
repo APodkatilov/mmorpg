@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Battle from '../../../models/battle';
 import Response from '../response';
-import BattleEventManager, { BattleEvents } from '../../core/playerGameContext';
+import BattleEventManager from '../../core/playerGameContext';
 
 
 export const create = (req, res) => {
