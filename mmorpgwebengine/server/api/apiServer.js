@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 // import seeder from 'mongoose-seed';
 import winston from 'winston';
 import morgan from 'morgan';
+import WebSocket from 'ws';
 // import dbSeedData from '../resources/dbseed';
 import BluebirdPromise from 'bluebird';
 import logger from '../logger';
@@ -15,6 +16,8 @@ import resourceRouter from './routes/resource.router';
 import battleRouter from './routes/battle.router';
 
 import authMiddleware from './middlewares/authMiddleware';
+import WebSocketsManager from '../sockets/WebSocketsManager';
+import BattleEventManager from '../core/battleEventManager';
 
 
 const port = config.apiPort;
@@ -68,6 +71,7 @@ mongoose
         },
       }),
     );
+
     console.log('Api Server Started');
 
     app.listen(port, (err) => {
@@ -77,6 +81,22 @@ mongoose
         console.info(
           `===> api server is running at ${config.apiHost}:${config.apiPort}`,
         );
+
+        const wss = new WebSocket.Server({ port: config.webSocketPort });
+        const webSocketsManager = new WebSocketsManager(wss);
+
+        webSocketsManager.start();
+
+        BattleEventManager.webSocketsManager = webSocketsManager;
+        // .then(() => {
+        //   console.info(
+        //     `===> web sockets server is running at ${config.apiHost}:${config.webSocketPort}`,
+        //   );
+        // }).catch((wsErr) => {
+        //   console.info(
+        //     `===> web sockets server start fail (${wsErr.message})at ${config.apiHost}:${config.webSocketPort}`,
+        //   );
+        // });
       }
     });
   })

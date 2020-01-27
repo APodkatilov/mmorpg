@@ -102,7 +102,7 @@ battleSchema.methods = {
         team.players = [playerId];
       }
       // eslint-disable-next-line no-underscore-dangle
-      return player.setActiveBattle(battle._id).team.save()
+      return player.setActiveBattle(battle._id).then(() => team.save())
         .then(() => mongoose.Promise.resolve(battle));
     });
   },

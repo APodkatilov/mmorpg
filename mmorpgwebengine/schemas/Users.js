@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Player from '../models/player';
+import PlayerModel from '../models/player';
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,6 +21,8 @@ const userSchema = new mongoose.Schema(
     },
     passwordHash: { type: String, required: true },
     salt: { type: String, default: '' },
+    online: { type: Boolean, default: false },
+    lastPing: { type: Date, index: true },
   },
   {
     timestamps: true,
@@ -38,6 +40,18 @@ userSchema.virtual('password').set(function setPassword(value) {
 });
 
 userSchema.statics = {
+  getOnline() {
+    return this.find({ online: true });
+  },
+  connect(userId) {
+    return this.findByIdAndUpdate(userId, { $set: { online: true, lastPing: new Date() } });
+  },
+  getPlayer(userId) {
+    return PlayerModel.findOne({ user: userId });
+  },
+  disconnect(userId) {
+    return this.findByIdAndUpdate(userId, { $set: { online: false } });
+  },
   singIn(email, password) {
     return this.findOne({ email }).then((user) => {
       if (!user) {
@@ -74,7 +88,7 @@ userSchema.statics = {
 
         const userId = mongoose.Types.ObjectId();
 
-        return Player.createDefault(userId).then(() => {
+        return PlayerModel.createDefault(userId).then(() => {
           const newUser = new Model({
             _id: userId,
             nickname,

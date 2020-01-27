@@ -2,33 +2,27 @@ import UserSession from '../../../models/userSession';
 import Response from '../response';
 import PlayerGameContext from '../../core/playerGameContext';
 
+export const getContext = (token) => UserSession.findOne({ token })
+  .then((userSession) => {
+    const context = new PlayerGameContext(userSession.user);
+    return context.load();
+  });
 export default function (req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
     res.status(401).json(new Response(false, null, 'Требуется атворизация.'));
   }
-  UserSession.findOne({ token: authHeader })
-    .then((userSession) => {
-      if (res != null) {
-        req.context = new PlayerGameContext(userSession.user);
-        req.context.load().then(() => next()).catch((err) => res
-          .status(400)
-          .json(
-            new Response(false, null, `Ошибка восстановления контекста пользователя (${err.message}).`),
-          ));
-      } else {
-        res
-          .status(400)
-          .json(
-            new Response(false, null, 'Токен авторизации не действителен.'),
-          );
-      }
-      return null;
-    })
-    .catch((err) => {
-      res
-        .status(400)
-        .json(new Response(false, null, `Ошибка проверки авторизации (${err.message}).`));
-    });
+
+  getContext(authHeader).then((context) => {
+    req.context = context;
+    next();
+    return null;
+  }).catch((err) => {
+    res
+      .status(400)
+      .json(
+        new Response(false, null, `Ошибка восстановления контекста пользователя (${err.message}).`),
+      );
+  });
 }

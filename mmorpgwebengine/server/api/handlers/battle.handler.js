@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Battle from '../../../models/battle';
 import Response from '../response';
-import BattleEventManager from '../../core/playerGameContext';
+import BattleEventManager from '../../core/battleEventManager';
 
 
 export const create = (req, res) => {
@@ -11,7 +11,7 @@ export const create = (req, res) => {
   Battle.createNew(context.player, mapId)
     .then((battle) => {
       // eslint-disable-next-line no-underscore-dangle
-      BattleEventManager.signalCreateBattle(battle._id);
+      BattleEventManager.signalCreateBattle(context, battle);
       return mongoose.Promise.resolve(battle);
     })
     .then((battle) => {
@@ -32,7 +32,7 @@ export const connect = (req, res) => {
   Battle.connect(context.player, battleId, teamId)
     .then((battle) => {
     // eslint-disable-next-line no-underscore-dangle
-      BattleEventManager.signalConnectBattle(battleId, teamId, context.player._id);
+      BattleEventManager.signalConnectBattle(context, battle, teamId);
       return mongoose.Promise.resolve(battle);
     })
     .then((battle) => {

@@ -1,10 +1,15 @@
 /* eslint-disable no-underscore-dangle */
+import Promise from 'bluebird';
 import Player from '../../models/player';
 
 class PlayerGameContext {
   constructor(userId) {
-    this.userId = userId;
+    this._userId = userId;
     this._player = null;
+  }
+
+  get userId() {
+    return this._userId;
   }
 
   get player() {
@@ -27,6 +32,8 @@ class PlayerGameContext {
         throw new Error('Игрок не найден.');
       }
       self._player = player;
+
+      return Promise.resolve(self);
     });
   }
 }

@@ -23,6 +23,7 @@ module.exports = {
     rules: {
         "linebreak-style": 0,
         "no-console":"off",
-        "no-plusplus":"off"
+        "no-plusplus":"off",
+        "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
     },
 };
