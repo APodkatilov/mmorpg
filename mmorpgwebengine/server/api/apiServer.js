@@ -43,8 +43,7 @@ mongoose.Promise = BluebirdPromise;
 
 const connectionString = process.env.MONGODB_URL || `mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
-// if (process.env.DB_SEED === 'true') {
-if (true) {
+if (process.env.DB_SEED === 'true') {
   (async () => {
     const seeder = (await import('mongoose-seed')).default;
     const dbSeedData = (await import('../resources/dbseed')).default;
