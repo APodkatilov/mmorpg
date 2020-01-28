@@ -1,11 +1,10 @@
 import Express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-// import seeder from 'mongoose-seed';
+
 import winston from 'winston';
 import morgan from 'morgan';
 import WebSocket from 'ws';
-// import dbSeedData from '../resources/dbseed';
 import BluebirdPromise from 'bluebird';
 import logger from '../logger';
 import config from '../../config';
@@ -42,16 +41,23 @@ app.use('/battle', battleRouter);
 
 mongoose.Promise = BluebirdPromise;
 
-const connectionString = `mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`;
+const connectionString = process.env.MONGODB_URL || `mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`;
 
-// seeder.connect(connectionString, function() {
-//   seeder.loadModels(dbSeedData.modelPaths);
-//   seeder.clearModels(dbSeedData.models, function() {
-//     seeder.populateModels(dbSeedData.data, function() {
-//       seeder.disconnect();
-//     });
-//   });
-// });
+// if (process.env.DB_SEED === 'true') {
+if (true) {
+  (async () => {
+    const seeder = (await import('mongoose-seed')).default;
+    const dbSeedData = (await import('../resources/dbseed')).default;
+    seeder.connect(connectionString, () => {
+      seeder.loadModels(dbSeedData.modelPaths);
+      seeder.clearModels(dbSeedData.models, () => {
+        seeder.populateModels(dbSeedData.data, () => {
+          seeder.disconnect();
+        });
+      });
+    });
+  })();
+}
 
 mongoose
   .connect(connectionString, {
