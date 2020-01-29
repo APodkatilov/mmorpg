@@ -6,6 +6,6 @@ export default [
   {
     _id: AMUNITION_TYPE_RIFLE,
     name: 'Rifle',
-    img: '[amunition_type-rifle]',
+    img: 'amunition-type/rifle',
   },
 ];

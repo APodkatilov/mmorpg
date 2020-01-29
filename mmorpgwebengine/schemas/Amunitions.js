@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 module.exports = new mongoose.Schema({
   name: { type: String, required: true },
-  img: { type: Buffer, required: true },
+  img: { type: String, required: true },
   props: {
     distance: { type: Number, default: 0, min: 0 },
     damage: { type: Number, default: 0, min: 0 },

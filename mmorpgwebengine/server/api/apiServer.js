@@ -1,4 +1,5 @@
 import Express from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
@@ -28,6 +29,8 @@ if (config.env === 'development') {
   app.use(morgan('combined', { stream: logger.stream }));
 }
 
+const imagePath = path.join(__dirname, '../../image');
+app.use('/image', Express.static(imagePath));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/json' }));
 

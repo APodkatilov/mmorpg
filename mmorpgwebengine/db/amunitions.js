@@ -7,7 +7,7 @@ export default [
   {
     _id: AMUNITION_AK_47,
     name: 'AK-47',
-    img: '[amunition-ak-47]',
+    img: 'amunition/gun-ak-47',
     props: {
       distance: 5,
       damage: 1,
