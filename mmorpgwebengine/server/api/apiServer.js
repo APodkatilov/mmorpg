@@ -1,6 +1,7 @@
 import Express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 
 import winston from 'winston';
@@ -24,7 +25,13 @@ const port = config.apiPort;
 
 const app = new Express();
 
+app.set('views', path.join(__dirname, '../../views'));
+app.set('view engine', 'ejs');
+// app.set('view cache', true);
 // setup the logger
+// app.configure('development', () => {
+
+// }));
 if (config.env === 'development') {
   app.use(morgan('combined', { stream: logger.stream }));
 }
@@ -33,15 +40,42 @@ const imagePath = path.join(__dirname, '../../image');
 app.use('/image', Express.static(imagePath));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/json' }));
+app.use(cookieParser());
+
 
 app.use('/todo', todoRoute);
 app.use('/auth', authRouter);
 
-app.use(authMiddleware);
+// app.use(authMiddleware);
 
-app.use('/resource', resourceRouter);
-app.use('/battle', battleRouter);
+app.use('/resource', authMiddleware, resourceRouter);
+app.use('/battle', authMiddleware, battleRouter);
+app.get('*', (req, res) => {
+  res.end('Route is not supported!');
+});
 
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+if (app.get('env') === 'development') {
+  app.use((err, req, res) => {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err,
+    });
+  });
+}
+app.use((err, req, res) => {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {},
+  });
+});
 mongoose.Promise = BluebirdPromise;
 
 const connectionString = process.env.MONGODB_URL || `mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`;
