@@ -15,6 +15,7 @@ import todoRoute from './routes/todo.router';
 import authRouter from './routes/auth.router';
 import resourceRouter from './routes/resource.router';
 import battleRouter from './routes/battle.router';
+import playerRouter from './routes/player.router';
 
 import authMiddleware from './middlewares/authMiddleware';
 import WebSocketsManager from '../sockets/WebSocketsManager';
@@ -50,6 +51,7 @@ app.use('/auth', authRouter);
 
 app.use('/resource', authMiddleware, resourceRouter);
 app.use('/battle', authMiddleware, battleRouter);
+app.use('player', authMiddleware, playerRouter);
 app.get('*', (req, res) => {
   res.end('Route is not supported!');
 });
