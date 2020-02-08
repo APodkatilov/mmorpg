@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "MMORPG web engine.",
   "main": "index.jsx",
+  "private": true,
   "scripts": {
+    
     "prod-db-seed": "cross-env DB_SEED=true NODE_ENV=development MONGODB_URL=\"mongodb+srv://admin:admin@mmorpgcuslter-s85rv.mongodb.net/mmorpg?retryWrites=true&w=majority\" babel-node server/api/bin/index.js",
     "db-seed": "cross-env DB_SEED=true NODE_ENV=development  babel-node server/api/bin/index.js",
     "watch-client": "cross-env NODE_ENV=development node ./server/index.js",
@@ -26,18 +28,7 @@
     "url": "https://github.com/emvakar/mmorpg.git"
   },
   "keywords": [
-    "react",
-    "redux",
-    "react-redux",
-    "redux-saga",
-    "mongo",
-    "express",
-    "hot reloading",
-    "react-hot-reloader",
-    "starter",
-    "boilerplate",
-    "babel",
-    "webpack"
+    "mmorpg"
   ],
   "homepage": "https://github.com/emvakar/mmorpg",
   "devDependencies": {
