@@ -51,7 +51,7 @@ app.use('/auth', authRouter);
 
 app.use('/resource', authMiddleware, resourceRouter);
 app.use('/battle', authMiddleware, battleRouter);
-app.use('player', authMiddleware, playerRouter);
+app.use('/player', authMiddleware, playerRouter);
 app.get('*', (req, res) => {
   res.end('Route is not supported!');
 });
