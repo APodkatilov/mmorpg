@@ -1,5 +1,5 @@
-import User from '../../../models/user';
-import UserSession from '../../../models/userSession';
+import User from '../../models/user';
+import UserSession from '../../models/userSession';
 import Response from '../response';
 
 export const signIn = (req, res) => {

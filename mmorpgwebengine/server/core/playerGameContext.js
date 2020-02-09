@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import Promise from 'bluebird';
-import Player from '../../models/player';
+import Player from '../models/player';
 
 class PlayerGameContext {
   constructor(userId) {

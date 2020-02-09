@@ -1,5 +1,5 @@
 /* eslint-disable */
-import Todo from '../../../models/todo';
+import Todo from '../../models/todo';
 
 export const getAll = (req, res) => {
   Todo.find({})

@@ -3,6 +3,6 @@
   "apiPort": 3030,
   "clientHost": "localhost",
   "clientPort": 3001,
-  "imagePath": "../../resource/image",
+  "imagePath": "resource/image",
   "mongoLogCollection": "log"
 }

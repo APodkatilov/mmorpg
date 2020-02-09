@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Battle from '../../../models/battle';
+import Battle from '../../models/battle';
 import Response from '../response';
 import BattleEventManager from '../../core/battleEventManager';
 

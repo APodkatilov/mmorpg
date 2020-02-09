@@ -1,10 +1,10 @@
-import Amunition from '../../../models/amunition';
-import AmunitionType from '../../../models/amunitionType';
-import BattleMapSizeType from '../../../models/battleMapSizeType';
-import BattleMapType from '../../../models/battleMapType';
-import BattleMap from '../../../models/battleMap';
-import Tile from '../../../models/tile';
-import TileType from '../../../models/tileType';
+import Amunition from '../../models/amunition';
+import AmunitionType from '../../models/amunitionType';
+import BattleMapSizeType from '../../models/battleMapSizeType';
+import BattleMapType from '../../models/battleMapType';
+import BattleMap from '../../models/battleMap';
+import Tile from '../../models/tile';
+import TileType from '../../models/tileType';
 import Response from '../response';
 
 export const amunitionTypes = (req, res) => {

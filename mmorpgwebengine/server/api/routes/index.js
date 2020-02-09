@@ -5,7 +5,7 @@ import battleRouter from './battle.router';
 import playerRouter from './player.router';
 
 import authMiddleware from '../middlewares/authMiddleware';
-import config , {Param, Env} from '../../../config';
+import config , {Param, Env} from '../../config';
 
 class RouteRegistrator {
     register(app) {

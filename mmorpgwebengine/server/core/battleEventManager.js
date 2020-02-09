@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import events from 'events';
-import TeamModel from '../../models/team';
-import UserModel from '../../models/user';
+import TeamModel from '../models/team';
+import UserModel from '../models/user';
 import logger from '../logger';
 
 import { battleCreateMessage, battleConnectMessage, battleStartMessage } from '../sockets/messages/battle.message';

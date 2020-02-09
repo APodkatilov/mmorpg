@@ -1,4 +1,4 @@
-import UserSession from '../../../models/userSession';
+import UserSession from '../../models/userSession';
 import Response from '../response';
 import PlayerGameContext from '../../core/playerGameContext';
 

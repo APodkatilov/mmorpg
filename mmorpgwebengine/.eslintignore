@@ -1,4 +1,6 @@
 .idea
 node_modules
 logs
+build
+dist
 webpack.dev.js

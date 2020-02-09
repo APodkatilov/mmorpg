@@ -4,7 +4,7 @@ import WebSocket from 'ws';
 import * as url from 'url';
 import Promise from 'bluebird';
 import { getContext } from '../api/middlewares/authMiddleware';
-import UserModel from '../../models/user';
+import UserModel from '../models/user';
 import BattleEventManager from '../core/battleEventManager';
 import logger from '../logger';
 
