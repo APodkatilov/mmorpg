@@ -2,6 +2,7 @@
 import events from 'events';
 import TeamModel from '../../models/team';
 import UserModel from '../../models/user';
+import logger from '../logger';
 
 import { battleCreateMessage, battleConnectMessage, battleStartMessage } from '../sockets/messages/battle.message';
 import { playerConnectMessage, playerLeaveMessage } from '../sockets/messages/player.message';
@@ -32,7 +33,7 @@ class BattleEventManager {
   _subscribe() {
     if (this._battleEventEmitter) {
       this._battleEventEmitter.on('error', (err) => {
-        console.log(`MESSAGE error ${err.message}`);
+        logger.error(`EM error ${err.message}.`);
       });
 
       this._battleEventEmitter.on(BattleEvents.BattleCreate, this._onBattleCreate.bind(this));

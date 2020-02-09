@@ -1,0 +1,8 @@
+{
+  "apiHost": "localhost",
+  "apiPort": 3030,
+  "clientHost": "localhost",
+  "clientPort": 3001,
+  "imagePath": "../../resource/image",
+  "mongoLogCollection": "log"
+}

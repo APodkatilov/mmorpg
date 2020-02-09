@@ -1,0 +1,4 @@
+{
+    "env": "production",
+    "db": "mongodb+srv://admin:admin@mmorpgcuslter-s85rv.mongodb.net/test?retryWrites=true&w=majority"
+}

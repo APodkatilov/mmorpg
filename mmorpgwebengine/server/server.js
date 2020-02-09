@@ -3,7 +3,7 @@ import Express from 'express';
 import httpProxy from 'http-proxy';
 import connectHistoryApiFallback from 'connect-history-api-fallback';
 import morgan from 'morgan';
-import config from '../config';
+import config from './config';
 
 
 const app = new Express();

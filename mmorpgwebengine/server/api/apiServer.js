@@ -3,151 +3,83 @@ import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
-
-import winston from 'winston';
 import morgan from 'morgan';
 import WebSocket from 'ws';
 import BluebirdPromise from 'bluebird';
 import logger from '../logger';
-import config from '../../config';
+import config,{Env, Param} from '../../config';
+import http from 'http';
 
-import todoRoute from './routes/todo.router';
-import authRouter from './routes/auth.router';
-import resourceRouter from './routes/resource.router';
-import battleRouter from './routes/battle.router';
-import playerRouter from './routes/player.router';
-
-import authMiddleware from './middlewares/authMiddleware';
 import WebSocketsManager from '../sockets/WebSocketsManager';
 import BattleEventManager from '../core/battleEventManager';
 
-
-const port = config.apiPort;
+import RouteRegistrator from './routes';
 
 const app = new Express();
 
 app.set('views', path.join(__dirname, '../../views'));
 app.set('view engine', 'ejs');
-// app.set('view cache', true);
-// setup the logger
-// app.configure('development', () => {
 
-// }));
-if (config.env === 'development') {
+if (config.get(Param.Env) !== Env.Development) {
+  app.set('view cache', true);
+}
+if (config.get(Param.Env) === Env.Development) {
   app.use(morgan('combined', { stream: logger.stream }));
 }
-
-const imagePath = path.join(__dirname, '../../image');
+const imagePath = path.join(__dirname, config.get(Param.ImagePath));
 app.use('/image', Express.static(imagePath));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(cookieParser());
 
+RouteRegistrator.register(app);
 
-app.use('/todo', todoRoute);
-app.use('/auth', authRouter);
-
-// app.use(authMiddleware);
-
-app.use('/resource', authMiddleware, resourceRouter);
-app.use('/battle', authMiddleware, battleRouter);
-app.use('/player', authMiddleware, playerRouter);
-app.get('*', (req, res) => {
-  res.end('Route is not supported!');
-});
-
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-if (app.get('env') === 'development') {
-  app.use((err, req, res) => {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err,
-    });
-  });
-}
-app.use((err, req, res) => {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {},
-  });
-});
 mongoose.Promise = BluebirdPromise;
 
-const connectionString = process.env.MONGODB_URL || `mongodb://${config.dbHost}:${config.dbPort}/${config.dbName}`;
+// if (process.env.DB_SEED === 'true') {
+//   (async () => {
+//     const seeder = (await import('mongoose-seed')).default;
+//     const dbSeedData = (await import('../resources/dbseed')).default;
+//     seeder.connect(connectionString, () => {
+//       seeder.loadModels(dbSeedData.modelPaths);
+//       seeder.clearModels(dbSeedData.models, () => {
+//         seeder.populateModels(dbSeedData.data, () => {
+//           seeder.disconnect();
+//         });
+//       });
+//     });
+//   })();
+// }
 
-console.log(connectionString);
-if (process.env.DB_SEED === 'true') {
-  (async () => {
-    const seeder = (await import('mongoose-seed')).default;
-    const dbSeedData = (await import('../resources/dbseed')).default;
-    seeder.connect(connectionString, () => {
-      seeder.loadModels(dbSeedData.modelPaths);
-      seeder.clearModels(dbSeedData.models, () => {
-        seeder.populateModels(dbSeedData.data, () => {
-          seeder.disconnect();
-        });
-      });
-    });
-  })();
-}
-
+const dbConnectionString  = config.get(Param.Db); 
 mongoose
-  .connect(connectionString, {
+  .connect(dbConnectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
   .then(() => {
-    logger.add(
-      new winston.transports.MongoDB({
-        level: 'info',
-        db: connectionString,
-        collection: 'logs',
-        options: {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        },
-      }),
-    );
 
-    console.log('Api Server Started');
+    logger.info('MongoDb connected.')
 
-    app.listen(port, (err) => {
+    const port = config.get(Param.ApiPort);
+
+    const httpServer = http.createServer(app)
+    const wss = new WebSocket.Server({ 'server': httpServer });
+    const webSocketsManager = new WebSocketsManager(wss);
+    webSocketsManager.start();
+
+    httpServer.listen(port, (err) => {
       if (err) {
-        console.error('err:', err);
+        logger.error(`Api server listen error ${err}`);
       } else {
-        console.info(
-          `===> api server is running at ${config.apiHost}:${config.apiPort}`,
-        );
-
-        const wss = new WebSocket.Server({ port: config.webSocketPort });
-        const webSocketsManager = new WebSocketsManager(wss);
-
-        webSocketsManager.start();
+        logger.info(`Api server is running at ${config.get(Param.ApiHost)}:${port}.`);
 
         BattleEventManager.webSocketsManager = webSocketsManager;
-        // .then(() => {
-        //   console.info(
-        //     `===> web sockets server is running at ${config.apiHost}:${config.webSocketPort}`,
-        //   );
-        // }).catch((wsErr) => {
-        //   console.info(
-        //     `===> web sockets server start fail (${wsErr.message})at ${config.apiHost}:${config.webSocketPort}`,
-        //   );
-        // });
       }
     });
   })
   .catch((err) => {
-    console.log(
-      'Please check if you have Mongo installed. The following error occurred: ',
-      err,
-    );
+    logger.error(`MongoDb connection error ${err}`);
   });

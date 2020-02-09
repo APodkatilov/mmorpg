@@ -6,6 +6,7 @@ import Promise from 'bluebird';
 import { getContext } from '../api/middlewares/authMiddleware';
 import UserModel from '../../models/user';
 import BattleEventManager from '../core/battleEventManager';
+import logger from '../logger';
 
 class WebSocketsManager {
   static PingPongInterval = 10000;
@@ -59,17 +60,17 @@ class WebSocketsManager {
   start() {
     this._wss.on('error', (error) => {
       this._stopPolling();
-      console.log(`WS connection error ${error}`);
+      logger.error(`WS error : ${error}`);
     });
 
     this._wss.on('close', () => {
       this._stopPolling();
-      console.log('WS connection close');
+      logger.info('WS connection close.');
     });
 
     this._wss.on('listening', () => {
       this._startPolling();
-      console.log('WS listening...');
+      logger.info('WS listening...');
     });
 
     // eslint-disable-next-line no-underscore-dangle
@@ -83,9 +84,7 @@ class WebSocketsManager {
       });
 
       client.on('close', (code, reason) => {
-        console.log(`ws clode code ${code}`);
-        console.log(`ws close reason ${reason}`);
-        console.log(req.url);
+        logger.warn(`WS closed, code: ${code}, reason: ${reason}, url:${req.url}.`);
         this._disconnect(client);
       });
 
@@ -95,16 +94,16 @@ class WebSocketsManager {
       if (token) {
         getContext(token).then((context) => {
           client.on('message', (data) => {
-            console.log(`message${data}`);
+            logger.into(`WS message: ${data}.`);
           });
           return this._connect(context, client);
         }).catch((err) => {
           client.close();
-          console.log(`Ошибка восстановления контекст WebSockets ${err.message}`);
+          logger.error(`WS error context resore: ${err.message}.`);
         });
       } else {
         client.close();
-        console.log('Отсутсвуют параметры авторизации клиента WebSocket');
+        logger.error('WS no auth prams.');
       }
     });
   }

@@ -1,0 +1,36 @@
+import path from 'path';
+import nconf from 'nconf';
+
+const env = process.env.NODE_ENV;
+
+export const Env = Object.freeze({
+     Production: 'production',
+     Development: 'development',
+});
+
+export const Param = Object.freeze({
+     Env: 'env',
+     ApiHost:'apiHost',
+     ApiPort: 'apiPort',
+     ClientHost: 'clientHost',
+     ClientPort: 'clientPort',
+     Db: 'db',
+     ImagePath: 'imagePath',
+     MongoLogCollection: 'mongoLogCollection',
+});
+
+
+const config = nconf.argv({parseValues: true})
+.env({lowerCase: true, parseValues: true, transform: (p) => {
+     if (p.key === 'node_env') {
+          p.key = 'env';
+     }
+     if (p.key === 'mongodb_url') {
+       p.key = 'db';
+     }
+     return p;
+   }})
+.file('base', { file: path.join(__dirname, `../config/config.base.json`) })
+.file('env', { file: path.join(__dirname, `../config/config.${env}.json`) });
+
+export default config;
