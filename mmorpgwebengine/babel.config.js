@@ -1,4 +1,7 @@
 module.exports = {
+  ignore: [
+    './server/public',
+  ],
   presets: [
     [
       '@babel/preset-env',
@@ -15,7 +18,8 @@ module.exports = {
   ],
   env: {
     production: {
-      only: ['app'],
+      only: ['testbox'],
+      presets: ['minify'],
       plugins: [
         'lodash',
         'transform-react-remove-prop-types',

@@ -1,4 +1,3 @@
-// import Promise from 'bluebird';
 /* eslint-disable no-underscore-dangle */
 import WebSocket from 'ws';
 import * as url from 'url';
@@ -19,7 +18,7 @@ class WebSocketsManager {
 
   _startPolling() {
     this._pollingTimer = setInterval(() => {
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-restricted-syntax, no-unused-vars
       for (const client of Object.values(this._clients)) {
         if (!client.isAlive) {
           this._disconnect(client);

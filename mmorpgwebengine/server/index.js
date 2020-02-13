@@ -6,9 +6,9 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import WebSocket from 'ws';
 import BluebirdPromise from 'bluebird';
-import logger from './logger';
-import config,{Env, Param} from './config';
 import http from 'http';
+import logger from './logger';
+import config, { Env, Param } from './config';
 
 import WebSocketsManager from './sockets/WebSocketsManager';
 import BattleEventManager from './core/battleEventManager';
@@ -28,6 +28,13 @@ if (config.get(Param.Env) === Env.Development) {
 }
 const imagePath = path.join(process.cwd(), config.get(Param.ImagePath));
 app.use('/image', Express.static(imagePath));
+
+const publicDir = path.resolve(__dirname, 'public/testbox');
+app.use('/testbox', Express.static(publicDir));
+
+// app.get('/testbox', (req, res) =>
+//   res.sendFile(path.resolve(__dirname, 'public/testbox/index.html')),
+// );
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/json' }));
@@ -52,7 +59,7 @@ mongoose.Promise = BluebirdPromise;
 //   })();
 // }
 
-const dbConnectionString  = config.get(Param.Db); 
+const dbConnectionString = config.get(Param.Db);
 mongoose
   .connect(dbConnectionString, {
     useNewUrlParser: true,
@@ -60,13 +67,12 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => {
-
-    logger.info('MongoDb connected.')
+    logger.info('MongoDb connected.');
 
     const port = config.get(Param.ApiPort);
 
-    const httpServer = http.createServer(app)
-    const wss = new WebSocket.Server({ 'server': httpServer });
+    const httpServer = http.createServer(app);
+    const wss = new WebSocket.Server({ server: httpServer });
     const webSocketsManager = new WebSocketsManager(wss);
     webSocketsManager.start();
 

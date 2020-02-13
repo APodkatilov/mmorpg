@@ -48,7 +48,7 @@ battleSchema.statics = {
         }
 
         const battleTeams = [];
-        for (let i = 0; i < mapType.teamCount; i++) {
+        for (let i = 0; i < mapType.teamCount; i += 1) {
           battleTeams.push(new TeamModel({
             name: `Команда ${i}`,
             players: i === 0 ? [playerId] : null,

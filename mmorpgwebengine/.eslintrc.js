@@ -1,13 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 
-const prettierOptions = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
-);
+// const prettierOptions = JSON.parse(
+//   fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
+// );
 
 module.exports = {
   parser: 'babel-eslint',
-  extends: ['airbnb', 'prettier', 'prettier/react'],
+  //extends: ['airbnb', 'prettier', 'prettier/react'],
+  extends: ['airbnb' ],
   plugins: ['prettier', 'redux-saga', 'react', 'react-hooks', 'jsx-a11y'],
   env: {
     jest: true,
@@ -23,7 +24,12 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': ['error', prettierOptions],
+    "react/jsx-curly-newline":[2, { multiline: "consistent", singleline: "consistent" }],
+    'react/state-in-constructor':[2, 'always'],
+    'react/static-property-placement': [2, 'static public field'],
+    'react/jsx-props-no-spreading': 0,
+    'linebreak-style': 'off',
+//    'prettier/prettier': ['error', prettierOptions],
     'arrow-body-style': [2, 'as-needed'],
     'class-methods-use-this': 0,
     'import/imports-first': 0,
@@ -78,12 +84,11 @@ module.exports = {
     'redux-saga/no-yield-in-race': 2,
     'redux-saga/yield-effects': 2,
     'require-yield': 0,
-  },
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: './internals/webpack/webpack.prod.babel.js',
-      },
-    },
+    'react/jsx-curly-spacing': ['warn', {
+      'when': 'never',
+      'children': {
+        'when': 'always'
+      }
+    }],
   },
 };

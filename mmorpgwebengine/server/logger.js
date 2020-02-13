@@ -1,6 +1,6 @@
 import winston from 'winston';
 import path from 'path';
-import config, {Param, Env} from './config';
+import config, { Param, Env } from './config';
 
 require('winston-mongodb');
 // eslint-disable-next-line no-unused-expressions
@@ -10,8 +10,8 @@ const logger = winston.createLogger();
 
 if (config.get(Param.Env) === Env.Development) {
   const logFilePath = path.join(process.cwd(), 'logs/log.log');
-  logger.add(new winston.transports.Console({ level: 'info' }));    
-  logger.add(new winston.transports.File({ filename: logFilePath, level: 'info' }));    
+  logger.add(new winston.transports.Console({ level: 'info' }));
+  logger.add(new winston.transports.File({ filename: logFilePath, level: 'info' }));
 }
 
 const dbConnectionString = config.get(Param.Db);

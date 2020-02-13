@@ -4,3 +4,5 @@ logs
 build
 dist
 webpack.dev.js
+server/public
+internals
