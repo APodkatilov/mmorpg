@@ -1,21 +1,21 @@
 import { body } from 'express-validator';
 
 const signInValidationRules = () => [
-  body('Login')
+  body('login')
     .not()
     .isEmpty(),
-  body('Password')
+  body('password')
     .not()
     .isEmpty(),
 ];
 
 const signOnValidationRules = () => [
-  body('Nickname')
+  body('nickname')
     .not()
     .isEmpty()
     .trim(),
-  body('Email').isEmail(),
-  body('Password')
+  body('email').isEmail(),
+  body('password')
     .not()
     .isEmpty(),
 ];

@@ -43,7 +43,7 @@ module.exports = options => {
         test: /\.css$/,
         exclude: /node_modules/,
         include: /testbox/, //new RegExp(options.area),
-        use: [{loader: 'style-loader', options: { injectType: 'linkTag' }}, 'css-loader'],
+        use: [{loader: 'style-loader', options: {injectType: 'styleTag'}}, 'css-loader'],
       },
       {
         // Preprocess 3rd party .css files located in node_modules

@@ -24,7 +24,8 @@
     "lint-server": "eslint ./server",
     "lint-testbox": "eslint ./testbox",
     "mocha": "mocha --require @babel/register 'test/**/*.js'",
-    "jest": "cross-env NODE_ENV=test jest --coverage"
+    "jest": "cross-env NODE_ENV=test jest --coverage",
+    "generate": "plop --plopfile internals/generators/index.js"
   },
   "author": "APodkatilov",
   "license": "MIT",
@@ -87,6 +88,7 @@
     "nodemon": "^1.15.0",
     "offline-plugin": "5.0.6",
     "open-browser-webpack-plugin": "0.0.5",
+    "plop": "^2.5.3",
     "postcss-loader": "^2.1.0",
     "progress-bar-webpack-plugin": "^1.10.0",
     "react-app-polyfill": "0.2.2",
@@ -107,10 +109,16 @@
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
     "@babel/register": "^7.8.3",
+    "@material-ui/core": "^4.9.2",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.43",
     "axios": "^0.17.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
+    "camelcase": "^5.3.1",
+    "camelcase-keys": "^6.1.2",
     "chalk": "2.4.2",
+    "clsx": "^1.1.0",
     "compression": "1.7.4",
     "connect-history-api-fallback": "^1.5.0",
     "connected-react-router": "6.4.0",
@@ -119,6 +127,7 @@
     "express-session": "^1.15.6",
     "express-validator": "^6.3.1",
     "fontfaceobserver": "2.1.0",
+    "formik": "^2.1.4",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",
     "http-proxy": "^1.16.2",
@@ -155,6 +164,7 @@
     "uuid": "^3.4.0",
     "winston": "^3.2.1",
     "winston-mongodb": "^5.0.1",
-    "ws": "^7.2.1"
+    "ws": "^7.2.1",
+    "yup": "^0.28.1"
   }
 }

@@ -1,7 +1,4 @@
-.app {
-    margin:0;
-}
-
-#id {
-    padding:100px;
+#app {
+    min-height:100%;
+    height:100%;
 }

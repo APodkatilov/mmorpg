@@ -3,7 +3,7 @@ import UserSession from '../../models/userSession';
 import Response from '../response';
 
 export const signIn = (req, res) => {
-  const { Login: login, Password: password } = req.body;
+  const { login, password } = req.body;
 
   User.singIn(login, password)
     .then((user) => {

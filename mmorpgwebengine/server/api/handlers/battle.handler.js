@@ -5,7 +5,7 @@ import BattleEventManager from '../../core/battleEventManager';
 
 
 export const create = (req, res) => {
-  const { MapId: mapId } = req.body;
+  const { mapId } = req.body;
   const { context } = req;
 
   Battle.createNew(context.player, mapId)
@@ -26,7 +26,7 @@ export const create = (req, res) => {
 };
 
 export const connect = (req, res) => {
-  const { BattleId: battleId, TeamId: teamId } = req.body;
+  const { battleId, teamId } = req.body;
   const { context } = req;
 
   Battle.connect(context.player, battleId, teamId)

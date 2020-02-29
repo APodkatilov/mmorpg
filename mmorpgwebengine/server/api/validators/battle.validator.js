@@ -1,16 +1,16 @@
 import { body, param } from 'express-validator';
 
 const createNewValidationRules = () => [
-  body('MapId')
+  body('mapId')
     .not()
     .isEmpty(),
 ];
 
 const connectValidationRules = () => [
-  body('BattleId')
+  body('battleId')
     .not()
     .isEmpty(),
-  body('TeamId').not().isEmpty(),
+  body('teamId').not().isEmpty(),
 ];
 
 const getTeamsValidationRules = () => [

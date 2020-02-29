@@ -9,10 +9,9 @@ const setup = require('./middlewares/frontendMiddleware');
 const isDev = process.env.NODE_ENV !== 'production';
 const area = process.env.AREA;
 const serverPort = process.env.SERVER_PORT || 3030;
-const ngrok =
-  (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
-    ? require('ngrok')
-    : false;
+const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
+  ? require('ngrok')
+  : false;
 const { resolve } = require('path');
 const app = express();
 
@@ -21,9 +20,9 @@ const app = express();
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
-  outputPath: resolve(process.cwd(), 'build/' + area),
+  outputPath: resolve(process.cwd(), `build/${area}`),
   publicPath: '/',
-  area
+  area,
 });
 const targetUrl = `http://localhost:${serverPort}`;
 const proxy = httpProxy.createProxyServer({
@@ -50,7 +49,7 @@ app.get('*.js', (req, res, next) => {
 });
 
 // Start your app.
-app.listen(port, host, async err => {
+app.listen(port, host, async (err) => {
   if (err) {
     return logger.error(err.message);
   }

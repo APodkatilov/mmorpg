@@ -1,4 +1,3 @@
-import todoRoute from './todo.router';
 import authRouter from './auth.router';
 import resourceRouter from './resource.router';
 import battleRouter from './battle.router';
@@ -9,7 +8,6 @@ import config, { Param, Env } from '../../config';
 
 class RouteRegistrator {
   register(app) {
-    app.use('/todo', todoRoute);
     app.use('/auth', authRouter);
 
     app.use('/resource', authMiddleware, resourceRouter);

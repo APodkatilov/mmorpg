@@ -14,6 +14,7 @@ import WebSocketsManager from './sockets/WebSocketsManager';
 import BattleEventManager from './core/battleEventManager';
 
 import RouteRegistrator from './api/routes';
+import ignoreCaseMiddleware from './api/middlewares/ignoreCaseMiddleware';
 
 const app = new Express();
 
@@ -39,6 +40,7 @@ app.use('/testbox', Express.static(publicDir));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(cookieParser());
+app.use(ignoreCaseMiddleware);
 
 RouteRegistrator.register(app);
 

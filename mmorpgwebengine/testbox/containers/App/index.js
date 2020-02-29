@@ -1,50 +1,35 @@
-/**
- *
- * App
- *
- * This component is the skeleton around the actual pages, and should only
- * contain code that should be seen on all pages. (e.g. navigation bar)
- */
-
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
 
-import Footer from '../../components/Footer';
-import FeaturePage from '../FeaturePage/Loadable';
 import NotFoundPage from '../NotFoundPage/Loadable';
-import Header from '../../components/Header';
-import HomePage from '../HomePage/Loadable';
+import SignInPage from '../SignInPage';
+import Dashboard from '../Dashboard';
 
 import GlobalStyle from '../../global-styles';
-
-const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
-`;
+import theme from './theme';
+import withAuth from '../../utils/withAuth';
+import { useInjectSaga } from '../../utils/injectSaga';
+import saga from './saga';
 
 export default function App() {
+  useInjectSaga({ key: 'app', saga });
   return (
-    <AppWrapper>
+    <ThemeProvider theme={theme}>
       <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
+        titleTemplate="%s - MMORPG Testbox"
+        defaultTitle="Testbox"
       >
-        <meta name="description" content="A React.js Boilerplate application" />
+        <meta name="description" content="MMORGP Testbox" />
       </Helmet>
-      <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
+        <Route exact path="/" component={withAuth(null, null, '/signin', '/dashboard')} />
+        <Route path="/signin" component={SignInPage} />
+        <Route path="/dashboard" component={withAuth(null, Dashboard, '/signin')} />
         <Route path="" component={NotFoundPage} />
       </Switch>
-      <Footer />
       <GlobalStyle />
-    </AppWrapper>
+    </ThemeProvider>
   );
 }
