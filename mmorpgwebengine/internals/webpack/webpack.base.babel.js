@@ -118,7 +118,7 @@ module.exports = options => {
     ],
   },
   plugins: options.plugins.concat([
-    new BundleAnalyzerPlugin(),
+    //new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       template: options.area + '/index.html',
       minify: options.mode === 'production' ? {
