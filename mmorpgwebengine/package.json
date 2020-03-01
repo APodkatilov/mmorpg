@@ -5,7 +5,7 @@
   "main": "index.jsx",
   "private": true,
   "scripts": {
-    "heroku": "npm run server:build & npm run testbox:build:dev & npm run testbox:deploy:dist & npm run server:run:dev",
+    "heroku": "npm run server:build && npm run testbox:build:dev && npm run testbox:deploy:dist && npm run server:run:dev",
     "start": "concurrently \"npm:server:debug:dev\" \"npm:testbox:start:dev\"",
     "server:clean": "rimraf ./dist",
     "server:build": "rimraf dist/ && rimraf server/public && babel ./server --out-dir dist/ --copy-files",
