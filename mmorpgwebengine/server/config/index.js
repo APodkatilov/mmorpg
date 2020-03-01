@@ -33,6 +33,10 @@ const config = nconf.argv({ parseValues: true })
         // eslint-disable-next-line no-param-reassign
         p.key = 'db';
       }
+      if (p.key === 'port') {
+        // eslint-disable-next-line no-param-reassign
+        p.key = 'apiPort';
+      }
       return p;
     },
   })
