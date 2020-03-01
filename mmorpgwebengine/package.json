@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "heroku": "npm run server:build && npm run testbox:build:dev && npm run testbox:deploy:dist && npm run server:run:dev",
+    "heroku:debug": "npm run server:build && npm run testbox:build:dev && npm run testbox:deploy:dist && cross-env PORT=3040 MONGODB_URL=\"mongodb+srv://admin:admin@mmorpgcuslter-s85rv.mongodb.net/mmorpg?retryWrites=true&w=majority\" npm run server:run:dev",
     "start": "concurrently \"npm:server:debug:dev\" \"npm:testbox:start:dev\"",
     "server:clean": "rimraf ./dist",
     "server:build": "rimraf dist/ && rimraf server/public && babel ./server --out-dir dist/ --copy-files",

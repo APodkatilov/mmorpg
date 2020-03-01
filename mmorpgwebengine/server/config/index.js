@@ -20,7 +20,8 @@ export const Param = Object.freeze({
 });
 
 
-const config = nconf.argv({ parseValues: true })
+const config = nconf
+  .argv({ parseValues: true })
   .env({
     lowerCase: true,
     parseValues: true,
@@ -41,6 +42,7 @@ const config = nconf.argv({ parseValues: true })
     },
   })
   .file('base', { file: path.join(__dirname, '../config/config.base.json') })
-  .file('env', { file: path.join(__dirname, `../config/config.${env}.json`) });
+  .file('envparam', { file: path.join(__dirname, `../config/config.${env}.json`) });
+
 
 export default config;

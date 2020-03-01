@@ -8,7 +8,7 @@
     "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/babel-node",
     "runtimeArgs": ["--nolazy"],
     "env": {
-      "NODE_ENV": "development"
+      "NODE_ENV": "development",
     }
   },
   {
