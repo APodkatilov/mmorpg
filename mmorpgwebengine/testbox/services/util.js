@@ -1,32 +1,6 @@
 import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
 
-
-// function toLowerCase(object) {
-//   if (object instanceof Array) {
-//     return object.map((element) => toLowerCase(element));
-//   }
-
-//   return Object.keys(object).reduce((c, k) => {
-//     const name = k[0].toLowerCase() + k.slice(1);
-//     if (object[k] == null) {
-//       // eslint-disable-next-line no-param-reassign
-//       c[name] = null;
-//     } else if (object[k] instanceof Array) {
-//       // eslint-disable-next-line no-param-reassign
-//       c[name] = object[k].map((o) => toLowerCase(o));
-//     } else if (typeof object[k] === 'object') {
-//       // eslint-disable-next-line no-param-reassign
-//       c[name] = toLowerCase(object[k]);
-//     } else {
-//       // eslint-disable-next-line no-param-reassign
-//       c[name] = object[k];
-//     }
-//     return c;
-//   }, {});
-// }
-
-
 const responseInterceptor = (response) => {
   response.data = camelcaseKeys(response.data, { deep: true });
   return response;

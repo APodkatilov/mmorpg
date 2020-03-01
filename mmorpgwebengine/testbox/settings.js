@@ -2,7 +2,7 @@ class Settings {
   static Token = 'Token';
 
   get apiUrl() {
-    return 'http://localhost:3001/api';
+    return '/';
   }
 
   get authToken() {
