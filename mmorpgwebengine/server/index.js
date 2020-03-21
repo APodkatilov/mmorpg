@@ -33,10 +33,6 @@ app.use('/image', Express.static(imagePath));
 const publicDir = path.resolve(__dirname, 'public/testbox');
 app.use('/testbox', Express.static(publicDir));
 
-// app.get('/testbox', (req, res) =>
-//   res.sendFile(path.resolve(__dirname, 'public/testbox/index.html')),
-// );
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(cookieParser());
@@ -46,20 +42,6 @@ RouteRegistrator.register(app);
 
 mongoose.Promise = BluebirdPromise;
 
-// if (process.env.DB_SEED === 'true') {
-//   (async () => {
-//     const seeder = (await import('mongoose-seed')).default;
-//     const dbSeedData = (await import('../resources/dbseed')).default;
-//     seeder.connect(connectionString, () => {
-//       seeder.loadModels(dbSeedData.modelPaths);
-//       seeder.clearModels(dbSeedData.models, () => {
-//         seeder.populateModels(dbSeedData.data, () => {
-//           seeder.disconnect();
-//         });
-//       });
-//     });
-//   })();
-// }
 
 const dbConnectionString = config.get(Param.Db);
 mongoose

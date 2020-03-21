@@ -1,4 +1,4 @@
-import data from '../../db';
+import data from './data';
 
 const models = [
   'User',
@@ -18,6 +18,6 @@ const models = [
   'UserSession',
 ];
 
-const modelPaths = models.map((m) => `models/${m.toLowerCase()}.js`);
+const modelPaths = models.map((m) => `./server/models/${m.toLowerCase()}.js`);
 
 export default { data, models, modelPaths };
