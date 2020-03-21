@@ -19,8 +19,9 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import TabPanel from '../../components/TabPanel';
-
+import BattleState from './BattleState';
 import styles from './styles';
+import BattleMap from './BattleMap';
 
 export function BattlePage() {
   useInjectReducer({ key: 'battlePage', reducer });
@@ -45,15 +46,15 @@ export function BattlePage() {
         <Tab label="Moves" icon={<TimelineIcon />} />
       </Tabs>
       <TabPanel value={tabsValue} index={0} isVertical>
-        <div>123</div>
+        <BattleState />
       </TabPanel>
       <TabPanel value={tabsValue} index={1} isVertical>
         <div>123</div>
       </TabPanel>
-      <TabPanel value={tabsValue} index={1} isVertical>
-        <div>123</div>
+      <TabPanel value={tabsValue} index={2} isVertical>
+        { tabsValue === 2 && <BattleMap /> }
       </TabPanel>
-      <TabPanel value={tabsValue} index={1} isVertical>
+      <TabPanel value={tabsValue} index={3} isVertical>
         <div>123</div>
       </TabPanel>
     </>

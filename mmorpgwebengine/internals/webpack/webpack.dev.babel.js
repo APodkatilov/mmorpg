@@ -4,7 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-
+const OfflinePlugin = require('offline-plugin');
 
 module.exports = env => require('./webpack.base.babel')({
   area: env.area,
@@ -29,6 +29,27 @@ module.exports = env => require('./webpack.base.babel')({
 
   // Add development plugins
   plugins: [
+    new OfflinePlugin({
+      relativePaths: false,
+      publicPath: '/' + env.area,
+      appShell: '/' + env.area,
+
+      // No need to cache .htaccess. See http://mxs.is/googmp,
+      // this is applied before any match in `caches` section
+      excludes: ['.htaccess'],
+
+      caches: {
+        main: [':rest:'],
+
+        // All chunks marked as `additional`, loaded after main section
+        // and do not prevent SW to install. Change to `optional` if
+        // do not want them to be preloaded at all (cached only when first loaded)
+        additional: ['*.chunk.js'],
+      },
+
+      // Removes warning for about `additional` section usage
+      safeToUseOptionalCaches: true,
+    }),
     new webpack.HotModuleReplacementPlugin(), // Tell webpack we want hot reloading
   ],
 

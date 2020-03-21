@@ -8,7 +8,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
-
 module.exports = options => {
   
   return ({
@@ -145,7 +144,10 @@ module.exports = options => {
     }),
   ]),
   resolve: {
-    modules: ['node_modules', options.area],
+    alias: {
+      vendor: path.resolve(process.cwd(), 'vendor')
+    },
+    modules: ['node_modules', options.area, 'vendor'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
   },

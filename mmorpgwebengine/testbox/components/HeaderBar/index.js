@@ -5,12 +5,15 @@ import {
   AppBar, Toolbar, IconButton, Typography,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+
+
 import Badge from '@material-ui/core/Badge';
 import MessageIcon from '@material-ui/icons/Message';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
 import styles from './styles';
 
 
@@ -140,7 +143,10 @@ function HeaderBar(props) {
           </div>
 
         </Toolbar>
+
       </AppBar>
+
+
     </>
   );
 }

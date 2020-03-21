@@ -15,6 +15,7 @@ import saga from './saga';
 
 export default function App() {
   useInjectSaga({ key: 'app', saga });
+
   return (
     <ThemeProvider theme={theme}>
       <Helmet

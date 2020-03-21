@@ -11,6 +11,7 @@ import produce from 'immer';
 
 // The initial state of the App
 export const initialState = {
+  ws: null,
   loading: false,
   error: false,
   currentUser: false,

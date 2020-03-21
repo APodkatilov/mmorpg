@@ -16,9 +16,12 @@ const responseErrorInterceptor = (error) => {
   return Promise.reject(error);
 };
 
-export const createApi = (baseUrl) => {
+export const createApi = (baseUrl, token = null) => {
+  const authHeader = token ? { Authorization: token } : {};
+
   const api = axios.create({
     baseURL: baseUrl,
+    headers: { ...authHeader },
   });
 
   const cancelToken = axios.CancelToken;

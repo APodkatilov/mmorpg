@@ -18,18 +18,21 @@ function FooterBar(props) {
 
 
   return (
-    <BottomNavigation
-      value={part}
-      onChange={
-        (event, newValue) => { setPart(newValue); }
-      }
-      showLables
-      className={classes.bottomNavigation}
-    >
-      <BottomNavigationAction label="Player" icon={<PersonIcon />} onClick={() => onNavigation('player')} />
-      <BottomNavigationAction label="Lounge" icon={<LocalBarIcon />} onClick={() => onNavigation('lounge')} />
-      <BottomNavigationAction label="Battle" icon={<GamesIcon />} onClick={() => onNavigation('battle')} />
-    </BottomNavigation>
+    <>
+      <BottomNavigation
+        value={part}
+        onChange={
+          (event, newValue) => { setPart(newValue); }
+        }
+        showLables
+        className={classes.bottomNavigation}
+      >
+        <BottomNavigationAction label="Player" icon={<PersonIcon />} onClick={() => onNavigation('player')} />
+        <BottomNavigationAction label="Lounge" icon={<LocalBarIcon />} onClick={() => onNavigation('lounge')} />
+        <BottomNavigationAction label="Battle" icon={<GamesIcon />} onClick={() => onNavigation('battle')} />
+      </BottomNavigation>
+
+    </>
   );
 }
 

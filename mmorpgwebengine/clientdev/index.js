@@ -5,6 +5,7 @@ const logger = require('./logger');
 const httpProxy = require('http-proxy');
 const argv = require('./argv');
 const port = require('./port');
+const path = require('path');
 const setup = require('./middlewares/frontendMiddleware');
 const isDev = process.env.NODE_ENV !== 'production';
 const area = process.env.AREA;
@@ -17,14 +18,8 @@ const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
-
-// In production we need to pass these values in instead of relying on webpack
-setup(app, {
-  outputPath: resolve(process.cwd(), `build/${area}`),
-  publicPath: '/',
-  area,
-});
 const targetUrl = `http://localhost:${serverPort}`;
+console.log(`Target url ${targetUrl}`);
 const proxy = httpProxy.createProxyServer({
   target: targetUrl,
 });
@@ -34,12 +29,31 @@ const customHost = argv.host || process.env.HOST;
 const host = customHost || null; // Let http.Server use its default IPv6/4 host
 const prettyHost = customHost || 'localhost';
 
+
 app.use('/api', (req, res) => {
+  console.log('Api proxy -> ');
   proxy.web(req, res, { target: `${targetUrl}` });
 });
-app.use('/auth', (req, res) => {
-  proxy.web(req, res, { target: `${targetUrl}` });
+// app.use('/auth', (req, res) => {
+//   console.log('Auth  proxy -> ');
+//   proxy.web(req, res, { target: `${targetUrl}` });
+// });
+// app.use('/battle', (req, res) => {
+//   console.log('Battle  proxy -> ');
+//   proxy.web(req, res, { target: `${targetUrl}` });
+// });
+
+
+const imagePath = path.join(process.cwd(), '/resource/image');
+console.log(imagePath);
+app.use('/image', express.static(imagePath));
+// In production we need to pass these values in instead of relying on webpack
+setup(app, {
+  outputPath: resolve(process.cwd(), `build/${area}`),
+  publicPath: '/',
+  area,
 });
+
 
 // use the gzipped bundle
 app.get('*.js', (req, res, next) => {

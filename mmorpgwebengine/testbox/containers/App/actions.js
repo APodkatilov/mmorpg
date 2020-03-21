@@ -1,4 +1,6 @@
-import { LOGOUT } from './constants';
+import {
+  LOGOUT, LOGIN,
+} from './constants';
 
 /**
  * logout
@@ -8,5 +10,17 @@ import { LOGOUT } from './constants';
 export function logout() {
   return {
     type: LOGOUT,
+  };
+}
+
+/**
+ * login
+ * @param {string} token Token
+ * @return {object}      An logout action object
+ */
+export function login(token) {
+  return {
+    type: LOGIN,
+    payload: token,
   };
 }

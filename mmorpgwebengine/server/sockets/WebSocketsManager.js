@@ -25,6 +25,7 @@ class WebSocketsManager {
           client.terminate();
         }
         client.isAlive = false;
+        console.log('ping');
         client.ping(null, false, true);
       }
     }, WebSocketsManager.PingPongInterval);
@@ -80,6 +81,7 @@ class WebSocketsManager {
       client.on('pong', () => {
         // eslint-disable-next-line no-param-reassign
         client.isAlive = true;
+        console.log('pong');
       });
 
       client.on('close', (code, reason) => {
@@ -109,6 +111,7 @@ class WebSocketsManager {
 
 
   sendSingleClient(userId, message) {
+    console.log('WS send:');
     const client = this._clients[userId];
 
     if (client && client.readyState === WebSocket.OPEN) {

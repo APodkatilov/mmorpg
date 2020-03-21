@@ -1,1 +1,2 @@
-export const LOGOUT = 'app/SignIn/LOGOUT';
+export const LOGOUT = 'app/App/LOGOUT';
+export const LOGIN = 'app/App/LOGIN';
